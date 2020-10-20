@@ -4,9 +4,9 @@ clc; clear all; close all;
 
 M =  20; % nb capteurs
 N = 500; % lonngueur d'echantillons
-varv = 0.1; % variance bruit
-tetas0deg = [40]; % degres
-vars = [1]; % variance du signal d'interet
+varv = 1; % variance bruit
+tetas0deg = [40 45]; % degres
+vars = [1 1]; % variance du signal d'interet
 
 tetas = tetas0deg.*pi./180; % rad
 K = length(tetas0deg); % Juste une source
@@ -42,11 +42,9 @@ for teta_tmp = inter_theta
     [V, D] = eig(R_chap); % les vecteurs propres sont les col de V, les val propres la diag de D
     
     a_tmp = exp(-1j*pi.*a1*sin(teta_tmp));
-    d_chap = 0;
-    for k=K+1:M
-        d_chap = d_chap + abs(a_tmp'*V(:,k)).^2;
-    end
-    d_chaps = [d_chaps d_chap];
+    abs(a_tmp'*V())^2
+    
+    P_chaps = [P_chaps P_chap];
 end
 
-plot(inter_theta*180/pi, abs(1./d_chaps));
+plot(inter_theta*180/pi, abs(P_chaps));
