@@ -4,10 +4,9 @@ clc; clear all; close all;
 
 M =  20; % nb capteurs
 N = 500; % lonngueur d'echantillons
-varv = 0.3; % variance bruit
-vars = 1; % variance du signal d'interet
+varv = 1; % variance bruit
 tetas0deg = [40 50]; % degres
-
+vars = [1 1]; % variance du signal d'interet
 
 tetas = tetas0deg.*pi./180; % rad
 K = length(tetas0deg); % Juste une source
@@ -16,7 +15,7 @@ A = [exp(-1j*pi.*a1*sin(tetas))];
 
 % s = randn(M, 1); Ca c'est en reel
 
-sn = sqrt(vars/2)*(randn(K,N) + 1i*randn(K,N)); % loi gaussienne imaginaire
+sn = diag(sqrt(vars/2))*(randn(K,N) + 1i*randn(K,N)); % loi gaussienne imaginaire
 
 vn = sqrt(varv/2)*(randn(M,N) + 1i*randn(M,N)); % vu que le bruit = bruit thermique, autant de vecteur de bruit que de capteurs
 
@@ -42,6 +41,7 @@ for teta_tmp = inter_theta
     
     a_tmp = exp(-1j*pi.*a1*sin(teta_tmp));
     P_chap = 1/(a_tmp'*inv(R_chap)*a_tmp);
+    % P_chap = (a_tmp'*R_chap*a_tmp); = MVDR
     P_chaps = [P_chaps P_chap];
 end
 
