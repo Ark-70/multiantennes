@@ -15,13 +15,8 @@ A = [a1];
 
 % s = randn(M, 1); Ca c'est en reel
 
-sn = sqrt(vars/2)*(randn(1,1) + i*randn(1,1)); % loi gaussienne imaginaire
+sn = sqrt(vars/2)*(randn(1,N) + i*randn(1,N)); % loi gaussienne imaginaire
 
-vn = sqrt(varv/2)*(randn(M,1) + i*randn(M,1)); % vu que le bruit = bruit thermique, autant de vecteur de bruit que de capteurs
+vn = sqrt(varv/2)*(randn(M,N) + i*randn(M,N)); % vu que le bruit = bruit thermique, autant de vecteur de bruit que de capteurs
 
 Y = A*sn+vn; % ce qui se balade sur le canal/à l'entrée des capteurs
-
-
-
-
-
